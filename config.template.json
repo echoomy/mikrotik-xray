@@ -1,0 +1,72 @@
+{
+	"log": {
+		"loglevel": "info"
+	},
+	"inbounds": [
+		{
+			"tag": "in",
+			"protocol": "tun",
+			"settings": {
+				"name": "xray0",
+				"mtu": 1500,
+				"gateway": [
+					"172.30.0.1/30"
+				],
+				"autoSystemRoutingTable": [
+					"0.0.0.0/1",
+					"128.0.0.0/1"
+				],
+				"autoOutboundsInterface": "auto"
+			}
+		}
+	],
+	"outbounds": [
+		{
+			"tag": "out",
+			"protocol": "vless",
+			"settings": {
+				"vnext": [
+					{
+						"address": "${SERVER_HOST}",
+						"port": 443,
+						"users": [
+							{
+								"id": "${CLIENT_UUID}",
+								"encryption": "none"
+							}
+						]
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "xhttp",
+				"security": "reality",
+				"realitySettings": {
+					"show": false,
+					"fingerprint": "chrome",
+					"serverName": "${SERVER_NAME}",
+					"password": "${CLIENT_KEY}",
+					"shortId": "${CLIENT_ID}"
+				},
+				"xhttpSettings": {
+					"path": "${SERVER_PATH}",
+					"mode": "auto",
+					"extra": {
+						"xPaddingBytes": "100-1000"
+					}
+				}
+			}
+		}
+	],
+	"routing": {
+		"rules": [
+			{
+				"type": "field",
+				"inboundTag": [
+					"in"
+				],
+				"outboundTag": "out"
+			}
+		]
+	}
+}

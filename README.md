@@ -1,4 +1,4 @@
-# MikroTik Gateway
+# MikroTik X-Ray
 
 A lightweight container for routing MikroTik traffic through a secure `xray-core` tunnel.
 

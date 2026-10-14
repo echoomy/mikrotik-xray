@@ -30,4 +30,4 @@ jobs:
           platforms: "linux/arm64"
           push: true
           provenance: false
-          tags: "${{ github.repository }}:latest"
+          tags: "ghcr.io/echoomy/${{ github.repository }}:latest"
